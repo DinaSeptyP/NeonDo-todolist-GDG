@@ -21,8 +21,10 @@ export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filter, setFilter] = useState<FilterStatus>("all");
   const { toast } = useToast();
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     const today = new Date();
     setTasks(initialTasksData.map((task, index) => ({
       ...task,
@@ -68,6 +70,10 @@ export default function Home() {
       return true;
     });
   }, [tasks, filter]);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
